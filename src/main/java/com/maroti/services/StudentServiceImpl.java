@@ -23,7 +23,7 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public Student findStudent(Integer roll) {
         Predicate<? super Student> predicate = std -> std.getRoll() == roll;
-        return studentList.stream().filter(predicate).findFirst().get();
+        return studentList.stream().filter(predicate).findFirst().orElse(null);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public Student updateStudent(Student std) {
-        Student student=studentList.stream().filter(st->st.getRoll() == std.getRoll()).findFirst().get();
+        Student student=studentList.stream().filter(st->st.getRoll() == std.getRoll()).findFirst().orElse(null);
         student.setName(std.getName());
         student.setAddr(std.getAddr());
         studentList.add(student);
@@ -47,7 +47,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public boolean deleteStudent(Integer roll) {
-        Student st=studentList.stream().filter(std->std.getRoll() == roll).findFirst().get();
+        Student st=studentList.stream().filter(std->std.getRoll() == roll).findFirst().orElse(null);
         return studentList.remove(st);
     }
 }

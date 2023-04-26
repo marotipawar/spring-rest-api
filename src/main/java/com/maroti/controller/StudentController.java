@@ -1,5 +1,6 @@
 package com.maroti.controller;
 
+import com.maroti.exception.StudentNotFoundException;
 import com.maroti.model.Student;
 import com.maroti.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,11 @@ public class StudentController {
 
     @GetMapping(path = {"/student/{roll}"})
     public Student findStudent(@PathVariable Integer roll){
-        return studentService.findStudent(roll);
+        Student student=studentService.findStudent(roll);
+        if(student==null){
+            throw new StudentNotFoundException("ID: "+roll);
+        }
+        return student;
     }
 
     @GetMapping(path = {"/allStudent"})
