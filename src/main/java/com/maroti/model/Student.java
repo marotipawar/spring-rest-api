@@ -1,5 +1,6 @@
 package com.maroti.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,9 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonFilter("studentFilter")
 public class Student {
     private Integer roll;
-    @JsonProperty("student_name")
+
     private String name;
     private String addr;
 }
