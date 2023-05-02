@@ -4,6 +4,9 @@ import com.maroti.exception.StudentNotFoundException;
 import com.maroti.model.Student;
 import com.maroti.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,4 +52,16 @@ public class StudentController {
         studentService.addStudent(std);
         return ResponseEntity.ok().build();
     }
+
+
+    @GetMapping(path ={"/students/{roll}"})
+    public EntityModel<Student> retriveUser(@PathVariable Integer roll){
+        Student student=studentService.findStudent(roll);
+        EntityModel<Student> model = EntityModel.of(student);
+
+        WebMvcLinkBuilder link =linkTo(methodOn(this.getClass()).findAll());
+        model.add(link.withRel("/allStudent"));
+        return model;
+    }
 }
+
